@@ -5,6 +5,10 @@
 
 using namespace std;
 
+
+
+
+//Перевод 10-ный число в 2-ный код
 void TenToTwo(int n, int *ds)
 {
     int m;
@@ -20,8 +24,19 @@ void TenToTwo(int n, int *ds)
 
 }
 
+// Делаем инфверсию 2-ного кода
+void obr(int *a)
+{
+    for (size_t i = 1; i < 17; i++)
+    {
+        if (a[i] == 0)
+            a[i] = 1;
+        else
+            a[i] = 0;
+    }
 
-
+}
+//Сложение 2-ных чисел в прямом коде
 void pryamoy_kod(int a, int b)
 {
     int a1[17] = {0};
@@ -34,14 +49,12 @@ void pryamoy_kod(int a, int b)
     {
         a1[0] = 1;
         a *= -1;
-
     }
 
     if (b < 0)
     {
         b1[0] = 1;
         b *= -1;
-
     }
     TenToTwo(a, a1);
     TenToTwo(b, b1);
@@ -161,25 +174,245 @@ void pryamoy_kod(int a, int b)
         {
             cout << c1[i] << " ";
         }
-
     }
-
-    
-
-   
-
-
 }
-
+//Сложение 2-ных чисел в прямом коде
 void obr_kod(int a, int b)
 {
-    cout << 1<<a << b;
+    int a1[17] = { 0 };
+    int b1[17] = { 0 };
+    int a2[17] = { 0 };
+    int b2[17] = { 0 };
+    int c1[17] = { 0 };
+    int d[17] = { 0 };
+    int d1[17] = { 0 };
+    d[16] = 1;
+    int k, l = 0;
+    k = a;
+    l = b;
+
+    if (a < 0)
+    {
+        a1[0] = 1;
+        a *= -1;
+    }
+
+    if (b < 0)
+    {
+        b1[0] = 1;
+        b *= -1;
+    }
+    TenToTwo(a, a1);
+    TenToTwo(b, b1);
+    for (size_t i = 0; i < 17; i++)
+    {
+        a2[i] = a1[i];
+        b2[i] = b1[i];
+    }
+
+    if (a1[0] == 1)
+    {
+        obr(a1);
+    }
+    if (b1[0] ==1)
+    {
+        obr(b1);
+    }
+
+    int sum = 0;
+    int pr = 0;
+
+
+    if ((k > 0) && (l > 0)) 
+    {
+        c1[0] = a1[0];
+        for (size_t i = 16; i >= 2; i--)
+        {
+            sum = a1[i] + b1[i] + pr;
+            c1[i] = sum % 2;
+            pr = sum / 2;
+        }
+        cout << "A=";
+        for (size_t i = 0; i < 17; i++)
+        {
+            cout << a2[i] << " ";
+        }
+        cout << endl;
+        cout << "B=";
+        for (size_t i = 0; i < 17; i++)
+        {
+            cout << b2[i] << " ";
+        }
+        cout << endl;
+        cout << "C=";
+        for (size_t i = 0; i < 17; i++)
+        {
+            cout << c1[i] << " ";
+        }
+    }
+    else
+        if ((k > 0) && (l < 0)&&(k<abs(l)))
+        {
+            c1[0] = b2[0];
+            for (size_t i = 16; i >= 1; i--)
+            {
+                sum = a1[i] + b1[i] + pr;
+
+                c1[i] = sum % 2;
+
+                pr = sum / 2;
+            }
+            cout << "A=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << a2[i] << " ";
+            }
+            cout << endl;
+            cout << "B=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << b1[i] << " ";
+            }
+            cout << endl;
+            cout << "C=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << c1[i] << " ";
+            }
+        }
+        else if ((k > 0) && (l < 0) && (k > abs(l)))
+        {
+            c1[0] = b2[0];
+            for (size_t i = 16; i >= 1; i--)
+            {
+                sum = a1[i] + b1[i] + pr;
+
+                c1[i] = sum % 2;
+
+                pr = sum / 2;
+            }
+            cout << "A=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << a2[i] << " ";
+            }
+            cout << endl;
+            cout << "B=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << b1[i] << " ";
+            }
+            cout << endl;
+            cout << "C=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << c1[i] << " ";
+            }
+            cout << endl;
+            cout << endl;
+            cout << endl;
+            pr = 0;
+            for (size_t i = 16; i >= 1; i--)
+            {
+                sum = c1[i] + d[i] + pr;
+
+                d1[i] = sum % 2;
+
+                pr = sum / 2;
+            }            
+            cout << "C=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << c1[i] << " ";
+            }
+            cout << endl;
+            cout << "P=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << d[i] << " ";
+            }
+            cout << endl;
+            cout << "O=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << d1[i] << " ";
+            }
+
+        }
+        else {
+            c1[0] = b2[0];
+            for (size_t i = 16; i >= 1; i--)
+            {
+                sum = a1[i] + b1[i] + pr;
+
+                c1[i] = sum % 2;
+
+                pr = sum / 2;
+            }
+            cout << "A=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << a1[i] << " ";
+            }
+            cout << endl;
+            cout << "B=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << b1[i] << " ";
+            }
+            cout << endl;
+            cout << "C=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << c1[i] << " ";
+            }
+            cout << endl;
+            cout << endl;
+           
+            pr = 0;
+            d1[0] = 1;
+            for (size_t i = 16; i >= 1; i--)
+            {
+                sum = c1[i] + d[i] + pr;
+
+                d1[i] = sum % 2;
+
+                pr = sum / 2;
+            }
+            cout << "C=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << c1[i] << " ";
+            }
+            cout << endl;
+            cout << "P=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << d[i] << " ";
+            }
+            cout << endl;
+            cout << "O=";
+            for (size_t i = 0; i < 17; i++)
+            {
+                cout << d1[i] << " ";
+            }
+
+
+        }
+
+
+
+
+  
+
+
 }
 
 
+//Сложение 2-ных чисел в дополнительном коде
 void dop_kod(int a, int b)
 {
-    cout <<2<< a << b;
+    
 
 }
 
