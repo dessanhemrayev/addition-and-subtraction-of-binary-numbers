@@ -5,7 +5,77 @@
 
 using namespace std;
 
+void summa_bits(int* a1, int* b1, int* c1)
+{
+    int sum = 0;
+    int pr = 0;
+    for (size_t i = 16; i >0; i--)
+    {
+        sum = a1[i] + b1[i] + pr;
+        c1[i] = sum % 2;
+        pr = sum / 2;
+    }
+    c1[0] = (a1[0] + b1[0] + pr) % 2;
+}
 
+void summa_bits_obr(int* a1, int* b1, int* c1)
+{
+    int sum = 0;
+    int pr = 0;
+    for (size_t i = 16; i > 0; i--)
+    {
+        sum = a1[i] + b1[i] + pr;
+        c1[i] = sum % 2;
+        pr = sum / 2;
+    }
+    c1[0] = (a1[0] + b1[0]+pr) % 2;
+    if (pr == 1) 
+    {
+        
+        int d[17] = { 0 };
+        d[16] = 1;
+        summa_bits(c1, d, c1);
+    }
+
+}
+void print_doub(int* a2, int* b2)
+{
+    cout << "A=";
+    for (size_t i = 0; i < 17; i++)
+    {
+        cout << a2[i] << " ";
+    }
+    cout << endl;
+    cout << "B=";
+    for (size_t i = 0; i < 17; i++)
+    {
+        cout << b2[i] << " ";
+    }
+    cout << endl;
+    
+}
+
+void print_d(int* a2, int* b2, int* c1)
+{
+    cout << "A=";
+    for (size_t i = 0; i < 17; i++)
+    {
+        cout << a2[i] << " ";
+    }
+    cout << endl;
+    cout << "B=";
+    for (size_t i = 0; i < 17; i++)
+    {
+        cout << b2[i] << " ";
+    }
+    cout << endl;
+    cout << "C=";
+    
+    for (size_t i = 0; i < 17; i++)
+    {
+        cout << c1[i] << " ";
+    }
+}
 
 
 //Перевод 10-ный число в 2-ный код
@@ -27,7 +97,7 @@ void TenToTwo(int n, int *ds)
 // Делаем инфверсию 2-ного кода
 void obr(int *a)
 {
-    for (size_t i = 1; i < 17; i++)
+    for (size_t i = 16; i > 0; i--)
     {
         if (a[i] == 0)
             a[i] = 1;
@@ -35,6 +105,14 @@ void obr(int *a)
             a[i] = 0;
     }
 
+}
+
+void pk_dk(int* a, int *b) 
+{
+    int d[17] = { 0 };
+    d[16] = 1;
+    summa_bits(a, d, b);
+   
 }
 //Сложение 2-ных чисел в прямом коде
 void pryamoy_kod(int a, int b)
@@ -44,7 +122,7 @@ void pryamoy_kod(int a, int b)
     int a2[17] = { 0 };
     int b2[17] = { 0 };
     int c1[17] = { 0 };
-
+ 
     if (a < 0)
     {
         a1[0] = 1;
@@ -69,7 +147,6 @@ void pryamoy_kod(int a, int b)
     bool fl = a1[0] xor b1[0];
     if (fl) 
     {
-        bool fk = false;
         if (a > b) 
         {
             c1[0] = a1[0];
@@ -85,25 +162,8 @@ void pryamoy_kod(int a, int b)
                 {
                     c1[i] = a1[i] - b1[i];
                 }
-               
             }
-            cout << "A=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << a2[i] << " ";
-            }
-            cout << endl;
-            cout << "B=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << b2[i] << " ";
-            }
-            cout << endl;
-            cout << "C=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << c1[i] << " ";
-            }
+            print_d(a2, b2, c1);
         }
         else
         {
@@ -114,17 +174,13 @@ void pryamoy_kod(int a, int b)
                 {
                     b1[i - 1]--;
                     b1[i] += 2;
-
-
                     c1[i] = b1[i] - a1[i];
-
                 }
                 else
                 {
                     c1[i] = b1[i] - a1[i];
                 }
             }
-
             cout << "B=";
             for (size_t i = 0; i < 17; i++)
             {
@@ -143,8 +199,6 @@ void pryamoy_kod(int a, int b)
                 cout << c1[i] << " ";
             }
         }
-
-
     }
     else
     {
@@ -152,30 +206,13 @@ void pryamoy_kod(int a, int b)
         for (size_t i = 16; i >= 1; i--)
         {
             sum = a1[i] + b1[i] + pr;
-
             c1[i] = sum % 2;
-
             pr = sum / 2;
         }
-        cout << "A=";
-        for (size_t i = 0; i < 17; i++)
-        {
-            cout << a2[i] << " ";
-        }
-        cout << endl;
-        cout << "B=";
-        for (size_t i = 0; i < 17; i++)
-        {
-            cout << b2[i] << " ";
-        }
-        cout << endl;
-        cout << "C=";
-        for (size_t i = 0; i < 17; i++)
-        {
-            cout << c1[i] << " ";
-        }
+        print_d(a2, b2, c1);
     }
 }
+
 //Сложение 2-ных чисел в прямом коде
 void obr_kod(int a, int b)
 {
@@ -186,6 +223,66 @@ void obr_kod(int a, int b)
     int c1[17] = { 0 };
     int d[17] = { 0 };
     int d1[17] = { 0 };
+    d[16] = 1;
+    int k, l = 0;
+    k = a;
+    l = b;
+    if (a < 0)
+    {
+        a1[0] = 1;
+        a *= -1;
+    }
+    if (b < 0)
+    {
+        b1[0] = 1;
+        b *= -1;
+    }
+    TenToTwo(a, a1);
+    TenToTwo(b, b1);
+    for (size_t i = 0; i < 17; i++)
+    {
+        a2[i] = a1[i];
+        b2[i] = b1[i];
+    }
+
+    if (a1[0] == 1)
+    {
+        obr(a1);
+    }
+    if (b1[0] ==1)
+    {
+        obr(b1);
+    }
+
+    print_doub(a1, b1);
+    cout << endl;
+    summa_bits_obr(a1, b1, c1);
+   
+
+    if (c1[0]==0) 
+    {
+        print_d(a2, b2, c1);
+    }
+    else
+    {
+        obr(c1);
+
+        print_d(a2, b2, c1);
+    }
+
+
+   
+}
+
+//Сложение 2-ных чисел в дополнительном коде
+void dop_kod(int a, int b)
+{
+    int a1[17] = { 0 };
+    int b1[17] = { 0 };
+    int a2[17] = { 0 };
+    int b2[17] = { 0 };
+    int c1[17] = { 0 };
+    int d[17] = { 0 };
     d[16] = 1;
     int k, l = 0;
     k = a;
@@ -209,21 +306,44 @@ void obr_kod(int a, int b)
         a2[i] = a1[i];
         b2[i] = b1[i];
     }
-
-    if (a1[0] == 1)
+        if (a1[0] == 1)
     {
         obr(a1);
+        pk_dk(a1, a1);
     }
-    if (b1[0] ==1)
+    if (b1[0] == 1)
     {
         obr(b1);
+        pk_dk(b1, b1);
     }
-
     int sum = 0;
     int pr = 0;
 
+    
+  
+    summa_bits(a1, b1, c1);
 
-    if ((k > 0) && (l > 0)) 
+    print_d(a1, b1, c1);
+    cout << endl;
+    cout << endl;
+    cout << endl;
+
+    if (c1[0] == 0)
+    {
+        print_d(a2, b2, c1);
+    }
+    else
+    {
+        obr(c1);
+      
+        pk_dk(c1, c1);
+       
+        print_d(a2, b2, c1);
+    }
+
+
+   /*
+    if ((k > 0) && (l > 0)&&(k+l>0))
     {
         c1[0] = a1[0];
         for (size_t i = 16; i >= 2; i--)
@@ -232,188 +352,68 @@ void obr_kod(int a, int b)
             c1[i] = sum % 2;
             pr = sum / 2;
         }
-        cout << "A=";
-        for (size_t i = 0; i < 17; i++)
-        {
-            cout << a2[i] << " ";
-        }
-        cout << endl;
-        cout << "B=";
-        for (size_t i = 0; i < 17; i++)
-        {
-            cout << b2[i] << " ";
-        }
-        cout << endl;
-        cout << "C=";
-        for (size_t i = 0; i < 17; i++)
-        {
-            cout << c1[i] << " ";
-        }
+        print_d(a2, b2, c1);
     }
-    else
-        if ((k > 0) && (l < 0)&&(k<abs(l)))
+    else if ((k > 0) && (l < 0) && (k + l > 0))
+    {
+        c1[0] = a1[0];
+        for (size_t i = 16; i >= 2; i--)
         {
-            c1[0] = b2[0];
-            for (size_t i = 16; i >= 1; i--)
-            {
-                sum = a1[i] + b1[i] + pr;
-
-                c1[i] = sum % 2;
-
-                pr = sum / 2;
-            }
-            cout << "A=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << a2[i] << " ";
-            }
-            cout << endl;
-            cout << "B=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << b1[i] << " ";
-            }
-            cout << endl;
-            cout << "C=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << c1[i] << " ";
-            }
+            sum = a1[i] + b1[i] + pr;
+            c1[i] = sum % 2;
+            pr = sum / 2;
         }
-        else if ((k > 0) && (l < 0) && (k > abs(l)))
+        print_d(a2, b2, c1);
+    }
+    else if ((k > 0) && (l < 0) && (k + l < 0))
+    {
+        c1[0] = a1[0];
+        for (size_t i = 16; i >= 2; i--)
         {
-            c1[0] = b2[0];
-            for (size_t i = 16; i >= 1; i--)
-            {
-                sum = a1[i] + b1[i] + pr;
-
-                c1[i] = sum % 2;
-
-                pr = sum / 2;
-            }
-            cout << "A=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << a2[i] << " ";
-            }
-            cout << endl;
-            cout << "B=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << b1[i] << " ";
-            }
-            cout << endl;
-            cout << "C=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << c1[i] << " ";
-            }
-            cout << endl;
-            cout << endl;
-            cout << endl;
-            pr = 0;
-            for (size_t i = 16; i >= 1; i--)
-            {
-                sum = c1[i] + d[i] + pr;
-
-                d1[i] = sum % 2;
-
-                pr = sum / 2;
-            }            
-            cout << "C=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << c1[i] << " ";
-            }
-            cout << endl;
-            cout << "P=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << d[i] << " ";
-            }
-            cout << endl;
-            cout << "O=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << d1[i] << " ";
-            }
-
+            sum = a1[i] + b1[i] + pr;
+            c1[i] = sum % 2;
+            pr = sum / 2;
         }
-        else {
-            c1[0] = b2[0];
-            for (size_t i = 16; i >= 1; i--)
-            {
-                sum = a1[i] + b1[i] + pr;
+        print_d(a2, b2, c1);
+    }
+    else if ((k < 0) && (l > 0) && (k + l < 0))
+    {
+        c1[0] = a1[0];
+        for (size_t i = 16; i >0; i--)
+        {
+            sum = a1[i] + b1[i] + pr;
+            c1[i] = sum % 2;
+            pr = sum / 2;
+        } obr(c1);
 
-                c1[i] = sum % 2;
-
-                pr = sum / 2;
-            }
-            cout << "A=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << a1[i] << " ";
-            }
-            cout << endl;
-            cout << "B=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << b1[i] << " ";
-            }
-            cout << endl;
-            cout << "C=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << c1[i] << " ";
-            }
-            cout << endl;
-            cout << endl;
-           
-            pr = 0;
-            d1[0] = 1;
-            for (size_t i = 16; i >= 1; i--)
-            {
-                sum = c1[i] + d[i] + pr;
-
-                d1[i] = sum % 2;
-
-                pr = sum / 2;
-            }
-            cout << "C=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << c1[i] << " ";
-            }
-            cout << endl;
-            cout << "P=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << d[i] << " ";
-            }
-            cout << endl;
-            cout << "O=";
-            for (size_t i = 0; i < 17; i++)
-            {
-                cout << d1[i] << " ";
-            }
-
-
+        pk_dk(c1, c1);
+        print_d(a2, b2, c1);
+    }
+    else if ((k < 0) && (l > 0) && (k + l > 0))
+    {
+    c1[0] = b1[0];
+    for (size_t i = 16; i > 0; i--)
+    {
+        sum = a1[i] + b1[i] + pr;
+        c1[i] = sum % 2;
+        pr = sum / 2;
+    }
+    print_d(a2, b2, c1);
+    }
+    else if ((k < 0) && (l < 0) && (k + l < 0))
+    {
+        c1[0] = a1[0];
+        for (size_t i = 16; i > 0; i--)
+        {
+            sum = a1[i] + b1[i] + pr;
+            c1[i] = sum % 2;
+            pr = sum / 2;
         }
-
-
-
-
-  
-
-
-}
-
-
-//Сложение 2-ных чисел в дополнительном коде
-void dop_kod(int a, int b)
-{
-    
-
+        obr(c1);
+        pk_dk(c1, c1);
+        print_d(a2, b2, c1);
+    }
+   */
 }
 
 int main()
@@ -421,36 +421,48 @@ int main()
     setlocale(LC_ALL, "Russian");
     int nm = 0;
     int a, b ;
-    cout << "Введите первое число:";
-    cin >> a;
-    cout << "Введите второе число:";
-    cin >> b;
-
-    cout << "Номера операций" << endl;
-    cout << "0 прямой код" << endl;
-    cout << "1 обратный код" << endl;
-    cout << "2 Дополнительный код" << endl;
-
-
-    cout << "Введите цифру:";
-    cin >> nm;
- 
-
-    
-
-
-    switch (nm)
+    bool fl = true;
+    string str = "";
+    while (fl)
     {
-        case 0: pryamoy_kod(a,b);
+        cout << "Введите первое число:";
+        cin >> a;
+        cout << "Введите второе число:";
+        cin >> b;
+        cout << "Номер операций" << endl;
+        cout << "0 прямой код" << endl;
+        cout << "1 обратный код" << endl;
+        cout << "2 Дополнительный код" << endl;
+        cout << "Введите цифру:";
+        cin >> nm;
+        switch (nm)
+        {
+        case 0: pryamoy_kod(a, b);
             break;
-        case 1: obr_kod(a,b);
+        case 1: obr_kod(a, b);
             break;
-        case 2: dop_kod(a,b);
+        case 2: dop_kod(a, b);
             break;
         default: cout << "Ошибка!!! Такое операцие не поддерживается!";
-        break;
-      
+            break;
+        }
+        cout << endl;
+        cout << "Будете продолжать?(y/n)";
+        cin >> str;
+        if (str == "y")
+        {
+            fl = true;
+        }
+        else
+            if (str == "н")
+            {
+                break;
+            }
+            else {
+                break;
+            }
     }
+    
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
