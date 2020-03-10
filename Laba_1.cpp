@@ -69,7 +69,17 @@ void print_d(int* a2, int* b2, int* c1)
         cout << b2[i] << " ";
     }
     cout << endl;
-    cout << "C=";
+    cout << "Знак :";
+    if (c1[0] == 0) 
+    {
+        cout << "плюс" << endl;
+    }
+    else
+    {
+        cout << "минус" << endl;
+    }
+    cout << "C=" ;
+
     
     for (size_t i = 0; i < 17; i++)
     {
@@ -77,6 +87,16 @@ void print_d(int* a2, int* b2, int* c1)
     }
 }
 
+int twoToten(int* a)
+{
+    int sum = 0;
+    for (int i = 16; i >=1; i--)
+    {
+        sum += a[i] * (pow(2, 16-i));
+    }
+    if (a[0] == 1) { sum *= -1; }
+    return sum;
+}
 
 //Перевод 10-ный число в 2-ный код
 void TenToTwo(int n, int *ds)
@@ -149,6 +169,7 @@ void pryamoy_kod(int a, int b)
     {
         if (a > b) 
         {
+            
             c1[0] = a1[0];
             for (size_t i = 16; i >= 1; i--)
             {
@@ -163,10 +184,14 @@ void pryamoy_kod(int a, int b)
                     c1[i] = a1[i] - b1[i];
                 }
             }
+            cout << "A>B" << endl;
+            cout << "Вычитание" << endl;
             print_d(a2, b2, c1);
+            cout << "C(10)=" << twoToten(c1);
         }
         else
         {
+            
             c1[0] = b1[0];
             for (size_t i = 16; i >= 1; i--)
             {
@@ -181,6 +206,8 @@ void pryamoy_kod(int a, int b)
                     c1[i] = b1[i] - a1[i];
                 }
             }
+            cout << "A<B" << endl;
+            cout << "Вычитание" << endl;
             cout << "B=";
             for (size_t i = 0; i < 17; i++)
             {
@@ -198,6 +225,7 @@ void pryamoy_kod(int a, int b)
             {
                 cout << c1[i] << " ";
             }
+            cout << "C(10)=" << twoToten(c1);
         }
     }
     else
@@ -209,7 +237,10 @@ void pryamoy_kod(int a, int b)
             c1[i] = sum % 2;
             pr = sum / 2;
         }
+        cout << "Сложение" << endl;
         print_d(a2, b2, c1);
+        cout  << endl;
+        cout << "C(10)=" << twoToten(c1);
     }
 }
 
@@ -231,11 +262,13 @@ void obr_kod(int a, int b)
     {
         a1[0] = 1;
         a *= -1;
+        cout << "Число А отрицательный" << endl;
     }
     if (b < 0)
     {
         b1[0] = 1;
         b *= -1;
+        cout << "Число Б отрицательный" << endl;
     }
     TenToTwo(a, a1);
     TenToTwo(b, b1);
@@ -257,17 +290,22 @@ void obr_kod(int a, int b)
     print_doub(a1, b1);
     cout << endl;
     summa_bits_obr(a1, b1, c1);
-   
+    cout << endl;
+  
 
     if (c1[0]==0) 
     {
         print_d(a2, b2, c1);
+        cout << endl;
+        cout << "C(10)=" << twoToten(c1) << endl;;
     }
     else
     {
         obr(c1);
 
         print_d(a2, b2, c1);
+        cout << endl;
+        cout << "C(10)=" << twoToten(c1) << endl;;
     }
 
 
@@ -287,17 +325,17 @@ void dop_kod(int a, int b)
     int k, l = 0;
     k = a;
     l = b;
-
     if (a < 0)
     {
         a1[0] = 1;
         a *= -1;
+        cout << "Число А отрицательный" << endl;
     }
-
     if (b < 0)
     {
         b1[0] = 1;
         b *= -1;
+        cout << "Число Б отрицательный" << endl;
     }
     TenToTwo(a, a1);
     TenToTwo(b, b1);
@@ -318,16 +356,11 @@ void dop_kod(int a, int b)
     }
     int sum = 0;
     int pr = 0;
-
-    
-  
     summa_bits(a1, b1, c1);
-
-    print_d(a1, b1, c1);
+    print_doub(a1, b1);
     cout << endl;
     cout << endl;
     cout << endl;
-
     if (c1[0] == 0)
     {
         print_d(a2, b2, c1);
@@ -335,86 +368,10 @@ void dop_kod(int a, int b)
     else
     {
         obr(c1);
-      
-        pk_dk(c1, c1);
-       
-        print_d(a2, b2, c1);
-    }
-
-
-   /*
-    if ((k > 0) && (l > 0)&&(k+l>0))
-    {
-        c1[0] = a1[0];
-        for (size_t i = 16; i >= 2; i--)
-        {
-            sum = a1[i] + b1[i] + pr;
-            c1[i] = sum % 2;
-            pr = sum / 2;
-        }
-        print_d(a2, b2, c1);
-    }
-    else if ((k > 0) && (l < 0) && (k + l > 0))
-    {
-        c1[0] = a1[0];
-        for (size_t i = 16; i >= 2; i--)
-        {
-            sum = a1[i] + b1[i] + pr;
-            c1[i] = sum % 2;
-            pr = sum / 2;
-        }
-        print_d(a2, b2, c1);
-    }
-    else if ((k > 0) && (l < 0) && (k + l < 0))
-    {
-        c1[0] = a1[0];
-        for (size_t i = 16; i >= 2; i--)
-        {
-            sum = a1[i] + b1[i] + pr;
-            c1[i] = sum % 2;
-            pr = sum / 2;
-        }
-        print_d(a2, b2, c1);
-    }
-    else if ((k < 0) && (l > 0) && (k + l < 0))
-    {
-        c1[0] = a1[0];
-        for (size_t i = 16; i >0; i--)
-        {
-            sum = a1[i] + b1[i] + pr;
-            c1[i] = sum % 2;
-            pr = sum / 2;
-        } obr(c1);
-
         pk_dk(c1, c1);
         print_d(a2, b2, c1);
     }
-    else if ((k < 0) && (l > 0) && (k + l > 0))
-    {
-    c1[0] = b1[0];
-    for (size_t i = 16; i > 0; i--)
-    {
-        sum = a1[i] + b1[i] + pr;
-        c1[i] = sum % 2;
-        pr = sum / 2;
-    }
-    print_d(a2, b2, c1);
-    }
-    else if ((k < 0) && (l < 0) && (k + l < 0))
-    {
-        c1[0] = a1[0];
-        for (size_t i = 16; i > 0; i--)
-        {
-            sum = a1[i] + b1[i] + pr;
-            c1[i] = sum % 2;
-            pr = sum / 2;
-        }
-        obr(c1);
-        pk_dk(c1, c1);
-        print_d(a2, b2, c1);
-    }
-   */
-}
+ }
 
 int main()
 {
