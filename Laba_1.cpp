@@ -9,7 +9,7 @@ void summa_bits(int* a1, int* b1, int* c1)
 {
     int sum = 0;
     int pr = 0;
-    for (size_t i = 16; i >0; i--)
+    for (size_t i = 16; i > 0; i--)
     {
         sum = a1[i] + b1[i] + pr;
         c1[i] = sum % 2;
@@ -28,10 +28,10 @@ void summa_bits_obr(int* a1, int* b1, int* c1)
         c1[i] = sum % 2;
         pr = sum / 2;
     }
-    c1[0] = (a1[0] + b1[0]+pr) % 2;
-    if (pr == 1) 
+    c1[0] = (a1[0] + b1[0] + pr) % 2;
+    if (pr == 1)
     {
-        
+
         int d[17] = { 0 };
         d[16] = 1;
         summa_bits(c1, d, c1);
@@ -52,7 +52,7 @@ void print_doub(int* a2, int* b2)
         cout << b2[i] << " ";
     }
     cout << endl;
-    
+
 }
 
 void print_d(int* a2, int* b2, int* c1)
@@ -70,7 +70,7 @@ void print_d(int* a2, int* b2, int* c1)
     }
     cout << endl;
     cout << "Знак :";
-    if (c1[0] == 0) 
+    if (c1[0] == 0)
     {
         cout << "плюс" << endl;
     }
@@ -78,9 +78,9 @@ void print_d(int* a2, int* b2, int* c1)
     {
         cout << "минус" << endl;
     }
-    cout << "C=" ;
+    cout << "C=";
 
-    
+
     for (size_t i = 0; i < 17; i++)
     {
         cout << c1[i] << " ";
@@ -90,16 +90,16 @@ void print_d(int* a2, int* b2, int* c1)
 int twoToten(int* a)
 {
     int sum = 0;
-    for (int i = 16; i >=1; i--)
+    for (int i = 16; i >= 1; i--)
     {
-        sum += a[i] * (pow(2, 16-i));
+        sum += a[i] * (pow(2, 16 - i));
     }
     if (a[0] == 1) { sum *= -1; }
     return sum;
 }
 
 //Перевод 10-ный число в 2-ный код
-void TenToTwo(int n, int *ds)
+void TenToTwo(int n, int* ds)
 {
     int m;
     int i = 0;
@@ -115,7 +115,7 @@ void TenToTwo(int n, int *ds)
 }
 
 // Делаем инфверсию 2-ного кода
-void obr(int *a)
+void obr(int* a)
 {
     for (size_t i = 16; i > 0; i--)
     {
@@ -127,22 +127,22 @@ void obr(int *a)
 
 }
 
-void pk_dk(int* a, int *b) 
+void pk_dk(int* a, int* b)
 {
     int d[17] = { 0 };
     d[16] = 1;
     summa_bits(a, d, b);
-   
+
 }
 //Сложение 2-ных чисел в прямом коде
 void pryamoy_kod(int a, int b)
 {
-    int a1[17] = {0};
-    int b1[17] = {0};
+    int a1[17] = { 0 };
+    int b1[17] = { 0 };
     int a2[17] = { 0 };
     int b2[17] = { 0 };
     int c1[17] = { 0 };
- 
+
     if (a < 0)
     {
         a1[0] = 1;
@@ -165,11 +165,11 @@ void pryamoy_kod(int a, int b)
     int sum = 0;
     int k = 0;
     bool fl = a1[0] xor b1[0];
-    if (fl) 
+    if (fl)
     {
-        if (a > b) 
+        if (a > b)
         {
-            
+
             c1[0] = a1[0];
             for (size_t i = 16; i >= 1; i--)
             {
@@ -179,7 +179,7 @@ void pryamoy_kod(int a, int b)
                     a1[i] += 2;
                     c1[i] = a1[i] - b1[i];
                 }
-                else 
+                else
                 {
                     c1[i] = a1[i] - b1[i];
                 }
@@ -191,7 +191,7 @@ void pryamoy_kod(int a, int b)
         }
         else
         {
-            
+
             c1[0] = b1[0];
             for (size_t i = 16; i >= 1; i--)
             {
@@ -239,7 +239,7 @@ void pryamoy_kod(int a, int b)
         }
         cout << "Сложение" << endl;
         print_d(a2, b2, c1);
-        cout  << endl;
+        cout << endl;
         cout << "C(10)=" << twoToten(c1);
     }
 }
@@ -282,7 +282,7 @@ void obr_kod(int a, int b)
     {
         obr(a1);
     }
-    if (b1[0] ==1)
+    if (b1[0] == 1)
     {
         obr(b1);
     }
@@ -291,9 +291,9 @@ void obr_kod(int a, int b)
     cout << endl;
     summa_bits_obr(a1, b1, c1);
     cout << endl;
-  
 
-    if (c1[0]==0) 
+
+    if (c1[0] == 0)
     {
         print_d(a2, b2, c1);
         cout << endl;
@@ -309,7 +309,7 @@ void obr_kod(int a, int b)
     }
 
 
-   
+
 }
 
 //Сложение 2-ных чисел в дополнительном коде
@@ -344,7 +344,7 @@ void dop_kod(int a, int b)
         a2[i] = a1[i];
         b2[i] = b1[i];
     }
-        if (a1[0] == 1)
+    if (a1[0] == 1)
     {
         obr(a1);
         pk_dk(a1, a1);
@@ -371,13 +371,13 @@ void dop_kod(int a, int b)
         pk_dk(c1, c1);
         print_d(a2, b2, c1);
     }
- }
+}
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
     int nm = 0;
-    int a, b ;
+    int a, b;
     bool fl = true;
     string str = "";
     while (fl)
@@ -419,7 +419,7 @@ int main()
                 break;
             }
     }
-    
+
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
